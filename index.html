@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Portfólio profissional de Marco Porto - Desenvolvedor">
+  <title>Marco Porto | Portfólio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --bg-light: #f9fafb;
+      --bg-card: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --border: #e5e7eb;
+      --transition: all 0.3s ease;
+    }
+    
+    .dark-mode {
+      --primary: #3b82f6;
+      --primary-dark: #60a5fa; 
+      --text: #f9fafb;
+      --text-light: #d1d5db;
+      --bg-light: #111827;
+      --bg-card: #1f2937;
+      --shadow: rgba(0, 0, 0, 0.3);
+      --border: #374151;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-light);
+      color: var(--text);
+      line-height: 1.6;
+      transition: var(--transition);
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    header {
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      background: var(--bg-light);
+      box-shadow: 0 2px 10px var(--shadow);
+      z-index: 100;
+      transition: var(--transition);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    
+    .theme-toggle:hover {
+      background: var(--border);
+    }
+    
+    .hero {
+      padding: 6rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+    }
+    
+    #hero {
+      position: relative;
+    }
+    
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.2;
+      z-index: -1;
+    }
+    
+    /* Modo claro */
+    #hero::before {
+      background: var(--bg-light);
+    }
+    
+    /* Modo escuro */
+    .dark-mode #hero::before {
+      background: var(--bg-light);
+      opacity: 0.1;
+    }
+    
+    .profile {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+      border-radius: 1rem;
+      background: transparent;
+      box-shadow: none;
+      animation: fadeIn 1s ease;
+    }
+    
+    .dark-mode .profile {
+      background: transparent;
+    }
+    
+    /* Adicionar estilos de texto para garantir legibilidade sobre o efeito */
+    .profile-title {
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .profile-bio {
+      text-shadow: 0 1px 8px rgba(0,0,0,0.15);
+    }
+    
+    .dark-mode .profile-title,
+    .dark-mode .profile-bio {
+      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+    
+    /* Melhorar contraste dos botões sociais */
+    .social-btn {
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+    
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 6px 20px var(--shadow);
+    }
+    
+    .profile-title {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    
+    .profile-bio {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 1rem;
+      color: var(--text-light);
+    }
+    
+    .profile-meta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    
+    .profile-meta-item {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background: var(--bg-card);
+      border-radius: 2rem;
+      box-shadow: 0 2px 8px var(--shadow);
+      font-size: 0.9rem;
+    }
+    
+    .profile-meta-item i {
+      margin-right: 0.5rem;
+      color: var(--primary);
+    }
+    
+    .profile-links {
+      margin-top: 1.5rem;
+    }
+    
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1.2rem;
+      margin: 0.5rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    .social-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .social-btn i {
+      margin-right: 0.5rem;
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px;
+    }
+    
+    .projects {
+      padding: 2rem 0 4rem;
+    }
+    
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .project-card {
+      background: var(--bg-card);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: var(--transition);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px var(--shadow);
+    }
+    
+    .project-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .project-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .project-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+      text-decoration: none;
+      display: block;
+    }
+    
+    .project-title:hover {
+      color: var(--primary);
+    }
+    
+    .project-desc {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+    
+    .project-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    
+    .primary-btn {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .primary-btn:hover {
+      background: var(--primary-dark);
+    }
+    
+    .outline-btn {
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    
+    .outline-btn:hover {
+      background: var(--border);
+    }
+    
+    .skeleton {
+      background: linear-gradient(90deg, var(--bg-card), var(--border), var(--bg-card));
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+    }
+    
+    .skeleton-img {
+      height: 180px;
+      width: 100%;
+    }
+    
+    .skeleton-title {
+      height: 24px;
+      width: 80%;
+      margin-bottom: 1rem;
+    }
+    
+    .skeleton-text {
+      height: 16px;
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+    
+    .skeleton-text:last-child {
+      width: 60%;
+    }
+    
+    .footer {
+      background: var(--bg-card);
+      padding: 2rem 0;
+      text-align: center;
+      box-shadow: 0 -2px 10px var(--shadow);
+    }
+    
+    .footer-text {
+      color: var(--text-light);
+    }
+    
+    .footer-link {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 3rem 0;
+    }
+    
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 5px solid var(--border);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      margin: 0 auto 1rem;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .profile-title {
+        font-size: 2rem;
+      }
+      
+      .profile-bio {
+        font-size: 1rem;
+      }
+    }
+
+    .project-stats {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-count {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      font-style: italic;
+    }
+
+    .project-categories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .category-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .category-btn:hover {
+      background: var(--border);
+    }
+
+    .category-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .page-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--text);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .page-btn:hover {
+      background: var(--border);
+    }
+
+    .page-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .page-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    /* Adicione dentro da tag <style> já existente */
+.nav-menu {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: var(--transition);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-wrap: wrap;
+  }
+  
+  .nav-menu {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
+
+/* Melhorar a visibilidade do título e bio contra os efeitos Vanta */
+.profile-title {
+  color: #ffffff !important; /* Forçar branco */
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5);
+  font-weight: 700;
+  position: relative;
+  z-index: 5;
+}
+
+.profile-bio {
+  color: #f9fafb !important; /* Forçar cinza muito claro */
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 0 15px rgba(0,0,0,0.5);
+  font-weight: 500;
+  position: relative;
+  z-index: 5;
+  padding: 0.5rem;
+  background-color: rgba(17, 24, 39, 0.3); /* Fundo semi-transparente para melhorar legibilidade */
+  border-radius: 0.5rem;
+  backdrop-filter: blur(3px); /* Efeito de desfoque sutil no fundo */
+  -webkit-backdrop-filter: blur(3px);
+  max-width: 85%;
+  margin: 0 auto;
+}
+
+/* Também melhorar os social buttons */
+.social-btn {
+  box-shadow: 0 3px 10px rgba(0,0,0,0.6);
+  z-index: 5;
+}
+  </style>
+  <!-- Carregue o Three.js primeiro -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  
+  <!-- Então carregue o Vanta.js (certifique-se de que a versão seja compatível) -->
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
+  <!-- Adicione estes scripts adicionais após o vanta.birds.min.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.rings.min.js"></script>
+</head>
+<body>
+    <header>
+      <div class="container header-content">
+        <a href="#" class="logo">Marco Porto</a>
+        <nav class="nav-menu">
+          <a href="#projects" class="nav-link">Projetos</a>
+        </nav>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </header>
+  
+    <!-- Seção hero corrigida -->
+    <section class="hero" id="hero">
+      <div class="container">
+        <div id="profile" class="profile">
+          <div class="loading">
+            <div class="loader"></div>
+            <p>Carregando perfil...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Seção projects corrigida -->
+    <section class="projects" id="projects">
+      <div class="container">
+        <h2 class="section-title">Meus Projetos</h2>
+        <div id="project-stats" class="project-stats">
+          <span id="project-count" class="project-count">0 projetos e contando...</span>
+        </div>
+        
+        <div id="project-categories" class="project-categories">
+          <button class="category-btn active" data-category="all">Todos</button>
+          <button class="category-btn" data-category="work">Profissionais</button>
+          <button class="category-btn" data-category="opensource">Open Source</button>
+          <button class="category-btn" data-category="learning">Aprendizado</button>
+          <button class="category-btn" data-category="personal">Pessoais</button>
+        </div>
+  
+        <div id="projects-grid" class="projects-grid">
+          <div class="loading">
+            <div class="loader"></div>
+            <p>Carregando projetos...</p>
+          </div>
+        </div>
+        
+        <div id="pagination" class="pagination">
+          <!-- Paginação será inserida aqui -->
+        </div>
+      </div>
+    </section>
+  
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">© <span id="current-year"></span> Marco Porto. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+  <script>
+    // Configurações
+    const username = "mtcporto";
+    const defaultImage = "https://placehold.co/300x180/eee/999?text=Sem+Imagem";
+    const maxProjects = 30; // Aumentando o limite para pegar mais projetos
+    const projectsPerPage = 6; // Projetos por página
+    
+    // Variáveis de estado para projetos
+    let allProjects = [];
+    let filteredProjects = [];
+    let currentPage = 1;
+    let currentCategory = 'all';
+    
+    // Função para sanitização básica de HTML
+    function sanitizeHTML(str) {
+      const temp = document.createElement('div');
+      temp.textContent = str;
+      return temp.innerHTML;
+    }
+    
+    // Função para manipulação do tema
+    function setupThemeToggle() {
+      const themeToggle = document.getElementById('theme-toggle');
+      const icon = themeToggle.querySelector('i');
+      
+      // Verificar preferência do usuário
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedTheme = localStorage.getItem('theme');
+      
+      if (savedTheme === 'dark' || (!savedTheme && prefersDarkMode)) {
+        document.body.classList.add('dark-mode');
+        icon.classList.replace('fa-moon', 'fa-sun');
+      }
+      
+      themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        
+        if (document.body.classList.contains('dark-mode')) {
+          localStorage.setItem('theme', 'dark');
+          icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+          localStorage.setItem('theme', 'light');
+          icon.classList.replace('fa-sun', 'fa-moon');
+        }
+      });
+    }
+    
+    // Inicializar ano atual no footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    
+    // Categorias de projetos (mapeamento manual)
+    const projectCategories = {
+      // Projetos profissionais
+      'cte-telas': 'work',
+      'frostmap': 'work',
+      'assinaturadigital': 'work',
+      'cem': 'work',
+      
+      // Projetos de interesse/aprendizado
+      'rickyandmorty': 'learning',
+      'pokedex': 'learning',
+      'dnd': 'learning',
+      'webrtc': 'learning',
+      'xmpp': 'learning',
+      
+      // Open Source
+      'opensource-project1': 'opensource',
+      'opensource-project2': 'opensource',
+      
+      // Por padrão, qualquer outro projeto será pessoal
+    };
+    
+    // Atualize a função loadUserProfile para incluir o LinkedIn
+    async function loadUserProfile() {
+      try {
+        const response = await fetch(`https://api.github.com/users/${username}`);
+        if (!response.ok) throw new Error('Erro ao carregar perfil');
+        
+        const user = await response.json();
+        const profileDiv = document.getElementById("profile");
+        
+        const socialLinks = [];
+        if (user.html_url) socialLinks.push(`<a href="${user.html_url}" class="social-btn" target="_blank" rel="noopener"><i class="fab fa-github"></i>GitHub</a>`);
+        if (user.blog) socialLinks.push(`<a href="${sanitizeHTML(user.blog)}" class="social-btn" target="_blank" rel="noopener"><i class="fas fa-globe"></i>Website</a>`);
+        
+        // Adicionar LinkedIn
+        socialLinks.push(`<a href="https://www.linkedin.com/in/marco-tulio-porto-5671a323/" class="social-btn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i>LinkedIn</a>`);
+        
+        profileDiv.innerHTML = `
+          <img src="${user.avatar_url}" alt="${sanitizeHTML(user.name || user.login)}" class="profile-img" loading="lazy" />
+          <h1 class="profile-title">${sanitizeHTML(user.name || user.login)}</h1>
+          <p class="profile-bio">${sanitizeHTML(user.bio || "Desenvolvedor de Software")}</p>
+          
+          <div class="profile-meta">
+            ${user.company ? `<span class="profile-meta-item"><i class="fas fa-building"></i>${sanitizeHTML(user.company)}</span>` : ''}
+            ${user.location ? `<span class="profile-meta-item"><i class="fas fa-map-marker-alt"></i>${sanitizeHTML(user.location)}</span>` : ''}
+            ${user.email ? `<span class="profile-meta-item"><i class="fas fa-envelope"></i>${sanitizeHTML(user.email)}</span>` : ''}
+          </div>
+          
+          <div class="profile-links">
+            ${socialLinks.join('')}
+          </div>
+        `;
+      } catch (error) {
+        console.error('Erro ao carregar perfil:', error);
+        document.getElementById("profile").innerHTML = `
+          <p>Não foi possível carregar o perfil. Tente novamente mais tarde.</p>
+        `;
+      }
+    }
+    
+    // Carregar projetos
+    async function loadProjects() {
+      const projectsGrid = document.getElementById("projects-grid");
+      const projectCount = document.getElementById("project-count");
+      
+      try {
+        const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=${maxProjects}`);
+        if (!response.ok) throw new Error('Erro ao carregar repositórios');
+        
+        let repos = await response.json();
+        
+        // Lista de projetos a serem ignorados
+        const ignoreList = ['LocalAI', 'xtwsd', 'oplayer'];
+        
+        // Filtrar repos
+        allProjects = repos.filter(repo => {
+          return !ignoreList.includes(repo.name) && !repo.fork;
+        });
+        
+        // Atualizar contador de projetos
+        projectCount.textContent = `${allProjects.length} projetos e contando...`;
+        
+        if (allProjects.length === 0) {
+          projectsGrid.innerHTML = '<p class="text-center">Nenhum projeto encontrado.</p>';
+          return;
+        }
+        
+        // Configurar eventos para categorias
+        setupCategoryFilters();
+        
+        // Inicialmente, mostrar todos os projetos
+        filterProjects('all');
+        
+      } catch (error) {
+        console.error('Erro ao carregar projetos:', error);
+        projectsGrid.innerHTML = `
+          <p>Não foi possível carregar os projetos. Tente novamente mais tarde.</p>
+        `;
+      }
+    }
+
+    // Configurar filtros de categoria
+    function setupCategoryFilters() {
+      const categoryBtns = document.querySelectorAll('.category-btn');
+      categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const category = btn.dataset.category;
+          
+          // Atualizar botão ativo
+          categoryBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          // Filtrar projetos
+          filterProjects(category);
+        });
+      });
+    }
+
+    // Filtrar projetos por categoria
+    function filterProjects(category) {
+      currentCategory = category;
+      currentPage = 1;
+      
+      // Filtrar projetos pela categoria
+      if (category === 'all') {
+        filteredProjects = [...allProjects];
+      } else {
+        filteredProjects = allProjects.filter(repo => {
+          const projectCategory = projectCategories[repo.name] || 'personal';
+          return projectCategory === category;
+        });
+      }
+      
+      // Renderizar resultados
+      renderProjects();
+      renderPagination();
+    }
+
+    // Renderizar projetos atuais
+    function renderProjects() {
+      const projectsGrid = document.getElementById("projects-grid");
+      projectsGrid.innerHTML = '';
+      
+      // Calcular projetos da página atual
+      const startIndex = (currentPage - 1) * projectsPerPage;
+      const endIndex = Math.min(startIndex + projectsPerPage, filteredProjects.length);
+      const currentPageProjects = filteredProjects.slice(startIndex, endIndex);
+      
+      if (currentPageProjects.length === 0) {
+        projectsGrid.innerHTML = '<p class="text-center">Nenhum projeto encontrado nesta categoria.</p>';
+        return;
+      }
+      
+      // Função para gerar cor baseada no nome do repositório
+      function generateColor(name) {
+        let hash = 0;
+        for (let i = 0; i < name.length; i++) {
+          hash = name.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const c = (hash & 0x00FFFFFF)
+          .toString(16)
+          .toUpperCase()
+          .padStart(6, '0');
+        return `#${c}`;
+      }
+
+      // Função para determinar cor de texto contrastante
+      function getContrastColor(hexcolor) {
+        // Converte hex para RGB
+        hexcolor = hexcolor.replace("#", "");
+        const r = parseInt(hexcolor.substr(0, 2), 16);
+        const g = parseInt(hexcolor.substr(2, 2), 16);
+        const b = parseInt(hexcolor.substr(4, 2), 16);
+        // Calcula luminosidade
+        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        return luminance > 0.5 ? '#000000' : '#FFFFFF';
+      }
+      
+      // Renderizar projetos
+      currentPageProjects.forEach(repo => {
+        const vercelLink = repo.homepage && repo.homepage.includes("vercel.app") ? repo.homepage : null;
+        
+        // Determinar categoria do projeto
+        const category = projectCategories[repo.name] || 'personal';
+        let categoryLabel = '';
+        let categoryIcon = '';
+        
+        switch(category) {
+          case 'work':
+            categoryLabel = 'Profissional';
+            categoryIcon = 'fas fa-briefcase';
+            break;
+          case 'opensource':
+            categoryLabel = 'Open Source';
+            categoryIcon = 'fas fa-code-branch';
+            break;
+          case 'learning':
+            categoryLabel = 'Aprendizado';
+            categoryIcon = 'fas fa-graduation-cap';
+            break;
+          case 'personal':
+          default:
+            categoryLabel = 'Pessoal';
+            categoryIcon = 'fas fa-user';
+        }
+        
+        // Gera uma cor baseada no nome do repositório
+        const bgColor = generateColor(repo.name);
+        const textColor = getContrastColor(bgColor);
+        
+        const projectCard = document.createElement('div');
+        projectCard.className = 'project-card';
+        projectCard.dataset.category = category;
+        
+        // Usa as iniciais do projeto
+        const nameInitials = repo.name
+          .split('-')
+          .map(word => word[0])
+          .join('')
+          .toUpperCase()
+          .substring(0, 3);
+        
+        const generatedImage = `
+          <div class="project-img" style="background-color: ${bgColor}; display: flex; align-items: center; justify-content: center; position: relative;">
+            <span style="color: ${textColor}; font-size: 3rem; font-weight: bold;">
+              ${nameInitials}
+            </span>
+            <span style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;">
+              <i class="${categoryIcon}"></i> ${categoryLabel}
+            </span>
+          </div>
+        `;
+        
+        projectCard.innerHTML = `
+          ${generatedImage}
+          <div class="project-content">
+            <a href="${repo.html_url}" class="project-title" target="_blank" rel="noopener">
+              ${sanitizeHTML(repo.name)}
+            </a>
+            <p class="project-desc">${sanitizeHTML(repo.description || "Sem descrição disponível.")}</p>
+            <div class="project-footer">
+              <a href="${repo.html_url}" class="project-btn outline-btn" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i> Código
+              </a>
+              ${vercelLink ? 
+                `<a href="${vercelLink}" class="project-btn primary-btn" target="_blank" rel="noopener">
+                  <i class="fas fa-external-link-alt"></i> Ver Demo
+                </a>` : 
+                ''}
+            </div>
+          </div>
+        `;
+        projectsGrid.appendChild(projectCard);
+      });
+    }
+
+    // Renderizar paginação
+    function renderPagination() {
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+      
+      // Calcular número de páginas
+      const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+      
+      if (totalPages <= 1) {
+        pagination.innerHTML = '';
+        return;
+      }
+      
+      // Botão anterior
+      const prevBtn = document.createElement('button');
+      prevBtn.className = `page-btn ${currentPage === 1 ? 'disabled' : ''}`;
+      prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderProjects();
+          renderPagination();
+          window.scrollTo(0, document.querySelector('.projects').offsetTop - 100);
+        }
+      });
+      pagination.appendChild(prevBtn);
+      
+      // Botões de página
+      const maxVisiblePages = 5;
+      let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+      let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+      
+      if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+      }
+      
+      for (let i = startPage; i <= endPage; i++) {
+        const pageBtn = document.createElement('button');
+        pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+        pageBtn.textContent = i;
+        pageBtn.addEventListener('click', () => {
+          currentPage = i;
+          renderProjects();
+          renderPagination();
+          window.scrollTo(0, document.querySelector('.projects').offsetTop - 100);
+        });
+        pagination.appendChild(pageBtn);
+      }
+      
+      // Botão próximo
+      const nextBtn = document.createElement('button');
+      nextBtn.className = `page-btn ${currentPage === totalPages ? 'disabled' : ''}`;
+      nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderProjects();
+          renderPagination();
+          window.scrollTo(0, document.querySelector('.projects').offsetTop - 100);
+        }
+      });
+      pagination.appendChild(nextBtn);
+    }
+    
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+      setupThemeToggle();
+      
+      // Carregar perfil e depois iniciar o Vanta
+      loadUserProfile().then(() => {
+        setupVantaBackground();
+      });
+      
+      loadProjects();
+      
+      // Adicionar rolagem suave para links internos
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
+
+// Atualize a função setupVantaBackground para melhorar a legibilidade
+function setupVantaBackground() {
+  // Verifica se o VANTA e THREE estão disponíveis
+  if (typeof VANTA === 'undefined' || typeof THREE === 'undefined') {
+    console.error('VANTA ou THREE não estão carregados corretamente.');
+    return;
+  }
+  
+  try {
+    // Sempre usar a cor escura de fundo para o efeito independente do tema
+    // Isso garantirá melhor legibilidade do texto
+    const darkBgColor = "#111827"; // Cor escura fixa, mesmo valor de --bg-light no modo dark
+    
+    // Obter cores do tema para os efeitos
+    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+    const primaryDarkColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-dark').trim();
+    
+    // Escolhe um efeito aleatoriamente
+    const effects = ['BIRDS', 'WAVES', 'DOTS', 'NET', 'RINGS'];
+    const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+    
+    // Configura as opções comuns
+    const commonOptions = {
+      el: '#hero',
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      backgroundColor: darkBgColor, // Sempre usar cor escura de fundo
+    };
+    
+    let vantaEffect;
+    
+    // Configura opções específicas para cada efeito com cores contrastantes
+    switch(randomEffect) {
+      case 'BIRDS':
+        vantaEffect = VANTA.BIRDS({
+          ...commonOptions,
+          color1: "#60a5fa", // Azul mais claro para contrastar com fundo escuro
+          color2: "#93c5fd", // Azul ainda mais claro
+          colorMode: "variance",
+          birdSize: 1.50,
+          wingSpan: 40.00,
+          separation: 100.00,
+          quantity: 3.00
+        });
+        break;
+        
+      case 'WAVES':
+        vantaEffect = VANTA.WAVES({
+          ...commonOptions,
+          color: "#60a5fa", // Azul mais claro
+          shininess: 40.00,
+          waveHeight: 15.00,
+          waveSpeed: 0.75,
+          zoom: 0.90
+        });
+        break;
+        
+      case 'DOTS':
+        vantaEffect = VANTA.DOTS({
+          ...commonOptions,
+          color: "#60a5fa", // Azul mais claro
+          color2: "#93c5fd", // Azul ainda mais claro
+          size: 4.00,
+          spacing: 35.00,
+          showLines: true
+        });
+        break;
+        
+      case 'NET':
+        vantaEffect = VANTA.NET({
+          ...commonOptions,
+          color: "#60a5fa", // Azul mais claro
+          backgroundColor: darkBgColor,
+          points: 10,
+          maxDistance: 20.00,
+          spacing: 16.00
+        });
+        break;
+        
+      case 'RINGS':
+        vantaEffect = VANTA.RINGS({
+          ...commonOptions,
+          color: "#60a5fa", // Azul mais claro
+          backgroundColor: darkBgColor,
+          backgroundAlpha: 1.0 // 100% opaco para garantir o fundo escuro
+        });
+        break;
+    }
+    
+    console.log(`Efeito Vanta escolhido: ${randomEffect}`);
+    
+    // Não precisamos mais atualizar a cor de fundo quando o tema mudar,
+    // pois agora vamos manter o fundo escuro sempre
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      // Não é mais necessário alterar o backgroundColor, mas podemos ajustar outras propriedades
+      // se necessário com base no tema
+    });
+    
+    // Para ter certeza que o texto será legível, vamos aumentar o contraste dele
+    // adicionando uma sombra mais visível
+    const profileTitle = document.querySelector('.profile-title');
+    const profileBio = document.querySelector('.profile-bio');
+    
+    if (profileTitle) {
+      profileTitle.style.textShadow = '0 2px 10px rgba(0,0,0,0.8)';
+      profileTitle.style.color = '#ffffff'; // Forçar branco para melhor contraste
+    }
+    
+    if (profileBio) {
+      profileBio.style.textShadow = '0 2px 8px rgba(0,0,0,0.8)';
+      profileBio.style.color = '#f9fafb'; // Forçar cinza muito claro para melhor contraste
+    }
+  } catch (error) {
+    console.error('Erro ao inicializar o efeito Vanta:', error);
+    document.getElementById('hero').classList.add('fallback-background');
+  }
+}
+</script>
+</body>
+</html>
