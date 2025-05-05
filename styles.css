@@ -301,6 +301,7 @@
     color: var(--text-light);
     margin-bottom: 1.5rem;
     flex-grow: 1;
+    text-align: justify;
   }
   
   .project-footer {
