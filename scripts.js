@@ -1,7 +1,7 @@
-   // Configurações
+// Configurações
    const username = "mtcporto";
    const defaultImage = "https://placehold.co/300x180/eee/999?text=Sem+Imagem";
-   const maxProjects = 30; // Aumentando o limite para pegar mais projetos
+   const maxProjects = 100; // Aumentando o limite para pegar mais projetos
    const projectsPerPage = 6; // Projetos por página
    
    // Variáveis de estado para projetos
@@ -70,7 +70,7 @@
      'artistas': ['cotidiano', 'vivajoaopessoa'],
      'qualidade': ['cotidiano'],
      'news': ['cotidiano'],
-     'tides': ['cotidiano'],
+     'tides': ['cotidiano', 'opensource'],
      'bangue': ['cotidiano'],
 
      // Learning (aprendizado/experimentação)
@@ -78,33 +78,21 @@
      'dnd': ['learning', 'nerd'],
      'rickyandmorty': ['learning', 'nerd'],
      'wow': ['learning', 'nerd'],
-     'chat-gemini': ['learning', 'ia'],
-     'detect': ['learning', 'ia'],
-     'facerec': ['learning', 'ia'],
-     'opencv': ['learning', 'ia'],
+     'chat-gemini': ['learning', 'ia', 'opensource'],
+     'detect': ['learning', 'ia', 'opensource'],
+     'facerec': ['learning', 'ia', 'opensource'],
+     'opencv': ['learning', 'ia', 'opensource'],
      'tts-wsapi': ['learning'],
-     'player': ['learning'],
-     'videos': ['learning'],
+     'videos': ['learning', 'opensource'],
      'filmes': ['learning'],
-     'webrtc': ['learning'], 
-     'xmpp': ['learning'],
+     'calls': ['learning'],
+     'chat': ['learning', 'opensource'],
 
-     // Open Source
-     'chat': ['opensource'],
-     'calls': ['opensource'],
-     'tides': ['opensource'],
-     'mares': ['opensource'],
-     'player': ['opensource'],
-     'chat-gemini': ['opensource', 'ia'],
+     // Open Source 
      'spotifylike': ['opensource'],
-     'videos': ['opensource'],
-     'opencv': ['opensource', 'ia'],
-     'detect': ['opensource', 'ia'],
-     'facerec': ['opensource', 'ia'],
 
      // Pessoal
      'portfolio': ['pessoal'],
-     // qualquer outro projeto não listado acima será 'pessoal' por padrão
    };
    
    // Atualize a função loadUserProfile para incluir o LinkedIn
@@ -157,12 +145,25 @@
        
        let repos = await response.json();
        
+       // Log detalhado para ajudar na depuração
+       console.log("--------- DEPURAÇÃO DE CATEGORIAS ---------");
+       console.log("Todos os repositórios carregados:");
+       repos.forEach(repo => {
+         const repoName = repo.name.toLowerCase();
+         const categories = projectCategories[repoName] || ['pessoal (padrão)'];
+         console.log(`${repo.name} (${repoName}): ${categories.join(', ')}`);
+       });
+       console.log("------------------------------------------");
+       
+       // Registre todos os nomes de repositórios para depuração
+       console.log("Repositórios carregados da API GitHub:", repos.map(repo => repo.name));
+       
        // Lista de projetos a serem ignorados
-       const ignoreList = ['LocalAI', 'xtwsd', 'oplayer'];
+       const ignoreList = ['LocalAI', 'xtwsd', 'oplayer', 'player']; // Adicionado 'player' à lista de ignorados
        
        // Filtrar repos
        allProjects = repos.filter(repo => {
-         return !ignoreList.includes(repo.name) && !repo.fork;
+         return !ignoreList.includes(repo.name.toLowerCase()) && !repo.fork;
        });
        
        // Atualizar contador de projetos
@@ -204,32 +205,79 @@
      });
    }
 
-   // Filtrar projetos por categoria
-   function filterProjects(category) {
-     currentCategory = category;
-     currentPage = 1;
-     
-     // Filtrar projetos pela categoria
-     if (category === 'all') {
-       filteredProjects = [...allProjects];
-     } else {
-       filteredProjects = allProjects.filter(repo => {
-         // Verificar se o projeto tem categorias definidas
-         const projectCats = projectCategories[repo.name];
-         if (projectCats) {
-           // Verificar se a categoria atual está entre as categorias do projeto
-           return projectCats.includes(category);
-         } else {
-           // Se não tiver categorias definidas, é considerado 'pessoal' por padrão
-           return category === 'pessoal';
-         }
-       });
-     }
-     
-     // Renderizar resultados
-     renderProjects();
-     renderPagination();
-   }
+// Filtrar projetos por categoria
+function filterProjects(category) {
+  currentCategory = category;
+  currentPage = 1;
+  
+  // Filtrar projetos pela categoria
+  if (category === 'all') {
+    filteredProjects = [...allProjects];
+  } else {
+    filteredProjects = allProjects.filter(repo => {
+      // Debug para identificar problemas
+      const repoLowerName = repo.name.toLowerCase();
+      const hasCategoryMapping = !!projectCategories[repoLowerName];
+      
+      if (!hasCategoryMapping && category === 'pessoal') {
+        console.log(`Repositório sem mapeamento (considerado 'pessoal'): ${repo.name}`);
+        return true;
+      }
+      
+      // Verificar se o projeto tem categorias definidas
+      const projectCats = projectCategories[repoLowerName];
+      if (projectCats) {
+        // Debug
+        if (projectCats.includes(category)) {
+          console.log(`Repositório "${repo.name}" corresponde à categoria "${category}"`);
+        } else {
+          console.log(`Repositório "${repo.name}" NÃO corresponde à categoria "${category}" (tem categorias: ${projectCats.join(', ')})`);
+        }
+        
+        // Verificar se a categoria atual está entre as categorias do projeto
+        return projectCats.includes(category);
+      } else {
+        // Se não tiver categorias definidas, é considerado 'pessoal' por padrão
+        return category === 'pessoal';
+      }
+    });
+  }
+  
+  // Atualizar a mensagem de contagem de projetos por categoria
+  const categoryText = category === 'all' ? 'Todos os projetos' : 
+    categoryNames[category] || category;
+  document.getElementById("project-count").textContent = 
+    `${filteredProjects.length} projeto${filteredProjects.length !== 1 ? 's' : ''} na categoria "${categoryText}"`;
+  
+  // Renderizar resultados
+  renderProjects();
+  renderPagination();
+}
+  
+  // Adicionar um objeto de nomes amigáveis para categorias no escopo global
+  const categoryNames = {
+    'all': 'Todos',
+    'institucional': 'Institucional',
+    'cotidiano': 'Cotidiano',
+    'vivajoaopessoa': 'Viva João Pessoa',
+    'learning': 'Aprendizado',
+    'nerd': 'Nerd/Fun',
+    'opensource': 'Open Source',
+    'ia': 'IA',
+    'pessoal': 'Pessoal'
+  };
+
+  // Objeto com ícones para cada categoria (mover para escopo global para evitar duplicação)
+  const categoryIcons = {
+    'institucional': 'fas fa-briefcase',
+    'cotidiano': 'fas fa-coffee',
+    'vivajoaopessoa': 'fas fa-map-marker-alt',
+    'learning': 'fas fa-graduation-cap',
+    'nerd': 'fas fa-gamepad',
+    'opensource': 'fas fa-code-branch',
+    'ia': 'fas fa-robot',
+    'pessoal': 'fas fa-user'
+  };
 
    // Renderizar projetos atuais
    function renderProjects() {
@@ -275,37 +323,17 @@
      currentPageProjects.forEach(repo => {
        const vercelLink = repo.homepage && repo.homepage.includes("vercel.app") ? repo.homepage : null;
        
-       // Determinar categorias do projeto
-       const projectCats = projectCategories[repo.name] || ['pessoal'];
+       // Determinar categorias do projeto (versão corrigida)
+       const repoLowerName = repo.name.toLowerCase();
+       const projectCats = projectCategories[repoLowerName] || ['pessoal'];
+
+       // Inicializar a variável categoryLabels para este projeto
        let categoryLabels = '';
-
-       // Objeto com ícones para cada categoria
-       const categoryIcons = {
-         'institucional': 'fas fa-briefcase',
-         'cotidiano': 'fas fa-coffee',
-         'vivajoaopessoa': 'fas fa-map-marker-alt',
-         'learning': 'fas fa-graduation-cap',
-         'nerd': 'fas fa-gamepad',
-         'opensource': 'fas fa-code-branch',
-         'ia': 'fas fa-robot',
-         'pessoal': 'fas fa-user'
-       };
-
-       // Objeto com nomes amigáveis para cada categoria
-       const categoryNames = {
-         'institucional': 'Institucional',
-         'cotidiano': 'Cotidiano',
-         'vivajoaopessoa': 'Viva JP',
-         'learning': 'Aprendizado',
-         'nerd': 'Nerd/Fun',
-         'opensource': 'Open Source',
-         'ia': 'IA',
-         'pessoal': 'Pessoal'
-       };
 
        // Criar badges para as categorias (limite a 3 para não sobrecarregar o visual)
        const categoriesToShow = projectCats.slice(0, 3);
        categoriesToShow.forEach((cat, index) => {
+         // Usar os objetos do escopo global
          const icon = categoryIcons[cat] || 'fas fa-tag';
          const name = categoryNames[cat] || cat;
          categoryLabels += `
