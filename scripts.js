@@ -60,6 +60,7 @@
 
      // Cotidiano (pode acumular com vivajoaopessoa)
      'bares': ['cotidiano', 'vivajoaopessoa'],
+     'vivajoaopessoa': ['cotidiano', 'vivajoaopessoa'],
      'clima': ['cotidiano', 'vivajoaopessoa'],
      'cinema': ['cotidiano', 'vivajoaopessoa'],
      'shows': ['cotidiano', 'vivajoaopessoa'],
@@ -321,8 +322,8 @@ function filterProjects(category) {
      
      // Renderizar projetos
      currentPageProjects.forEach(repo => {
-       const vercelLink = repo.homepage && repo.homepage.includes("vercel.app") ? repo.homepage : null;
-       
+      const demoLink = repo.homepage ? repo.homepage : null;
+
        // Determinar categorias do projeto (versão corrigida)
        const repoLowerName = repo.name.toLowerCase();
        const projectCats = projectCategories[repoLowerName] || ['pessoal'];
@@ -408,11 +409,11 @@ function filterProjects(category) {
              <a href="${repo.html_url}" class="project-btn outline-btn" target="_blank" rel="noopener">
                <i class="fab fa-github"></i> Código
              </a>
-             ${vercelLink ? 
-               `<a href="${vercelLink}" class="project-btn primary-btn" target="_blank" rel="noopener">
-                 <i class="fas fa-external-link-alt"></i> Ver Demo
-               </a>` : 
-               ''}
+              ${demoLink ? 
+                `<a href="${demoLink}" class="project-btn primary-btn" target="_blank" rel="noopener">
+                  <i class="fas fa-external-link-alt"></i> Ver Demo
+                </a>` : 
+                ''}
            </div>
          </div>
        `;
