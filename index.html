@@ -641,12 +641,16 @@
         </div>
         
         <div id="project-categories" class="project-categories">
-          <button class="category-btn active" data-category="all">Todos</button>
-          <button class="category-btn" data-category="work">Profissionais</button>
-          <button class="category-btn" data-category="opensource">Open Source</button>
-          <button class="category-btn" data-category="learning">Aprendizado</button>
-          <button class="category-btn" data-category="personal">Pessoais</button>
-        </div>
+  <button class="category-btn active" data-category="all">Todos</button>
+  <button class="category-btn" data-category="institucional">Institucionais</button>
+  <button class="category-btn" data-category="cotidiano">Cotidiano</button>
+  <button class="category-btn" data-category="vivajoaopessoa">Viva João Pessoa</button>
+  <button class="category-btn" data-category="learning">Aprendizado</button>
+  <button class="category-btn" data-category="nerd">Nerd/Fun</button>
+  <button class="category-btn" data-category="opensource">Open Source</button>
+  <button class="category-btn" data-category="ia">IA</button>
+  <button class="category-btn" data-category="pessoal">Pessoais</button>
+</div>
   
         <div id="projects-grid" class="projects-grid">
           <div class="loading">
@@ -719,24 +723,62 @@
     
     // Categorias de projetos (mapeamento manual)
     const projectCategories = {
-      // Projetos profissionais
-      'cte-telas': 'work',
-      'frostmap': 'work',
-      'assinaturadigital': 'work',
-      'cem': 'work',
-      
-      // Projetos de interesse/aprendizado
-      'rickyandmorty': 'learning',
-      'pokedex': 'learning',
-      'dnd': 'learning',
-      'webrtc': 'learning',
-      'xmpp': 'learning',
-      
+      // Institucional/profissional
+      'cte-telas': ['institucional'],
+      'frostmap': ['institucional'],
+      'assinaturadigital': ['institucional'],
+      'cem': ['institucional'],
+      'juridico': ['institucional'],
+      'cert': ['institucional'],
+      'alertas': ['institucional'],
+      'whatnow': ['institucional'],
+
+      // Cotidiano (pode acumular com vivajoaopessoa)
+      'bares': ['cotidiano', 'vivajoaopessoa'],
+      'clima': ['cotidiano', 'vivajoaopessoa'],
+      'cinema': ['cotidiano', 'vivajoaopessoa'],
+      'shows': ['cotidiano', 'vivajoaopessoa'],
+      'noticias': ['cotidiano', 'vivajoaopessoa'],
+      'noticiaspb': ['cotidiano', 'vivajoaopessoa'],
+      'mares': ['cotidiano', 'vivajoaopessoa'],
+      'artistas': ['cotidiano', 'vivajoaopessoa'],
+      'qualidade': ['cotidiano'],
+      'news': ['cotidiano'],
+      'tides': ['cotidiano'],
+      'bangue': ['cotidiano'],
+
+      // Learning (aprendizado/experimentação)
+      'pokedex': ['learning', 'nerd'],
+      'dnd': ['learning', 'nerd'],
+      'rickyandmorty': ['learning', 'nerd'],
+      'wow': ['learning', 'nerd'],
+      'chat-gemini': ['learning', 'ia'],
+      'detect': ['learning', 'ia'],
+      'facerec': ['learning', 'ia'],
+      'opencv': ['learning', 'ia'],
+      'tts-wsapi': ['learning'],
+      'player': ['learning'],
+      'videos': ['learning'],
+      'filmes': ['learning'],
+      'webrtc': ['learning'], 
+      'xmpp': ['learning'],
+
       // Open Source
-      'opensource-project1': 'opensource',
-      'opensource-project2': 'opensource',
-      
-      // Por padrão, qualquer outro projeto será pessoal
+      'chat': ['opensource'],
+      'calls': ['opensource'],
+      'tides': ['opensource'],
+      'mares': ['opensource'],
+      'player': ['opensource'],
+      'chat-gemini': ['opensource', 'ia'],
+      'spotifylike': ['opensource'],
+      'videos': ['opensource'],
+      'opencv': ['opensource', 'ia'],
+      'detect': ['opensource', 'ia'],
+      'facerec': ['opensource', 'ia'],
+
+      // Pessoal
+      'portfolio': ['pessoal'],
+      // qualquer outro projeto não listado acima será 'pessoal' por padrão
     };
     
     // Atualize a função loadUserProfile para incluir o LinkedIn
@@ -846,8 +888,15 @@
         filteredProjects = [...allProjects];
       } else {
         filteredProjects = allProjects.filter(repo => {
-          const projectCategory = projectCategories[repo.name] || 'personal';
-          return projectCategory === category;
+          // Verificar se o projeto tem categorias definidas
+          const projectCats = projectCategories[repo.name];
+          if (projectCats) {
+            // Verificar se a categoria atual está entre as categorias do projeto
+            return projectCats.includes(category);
+          } else {
+            // Se não tiver categorias definidas, é considerado 'pessoal' por padrão
+            return category === 'pessoal';
+          }
         });
       }
       
@@ -900,28 +949,68 @@
       currentPageProjects.forEach(repo => {
         const vercelLink = repo.homepage && repo.homepage.includes("vercel.app") ? repo.homepage : null;
         
-        // Determinar categoria do projeto
-        const category = projectCategories[repo.name] || 'personal';
-        let categoryLabel = '';
-        let categoryIcon = '';
-        
-        switch(category) {
-          case 'work':
-            categoryLabel = 'Profissional';
-            categoryIcon = 'fas fa-briefcase';
-            break;
-          case 'opensource':
-            categoryLabel = 'Open Source';
-            categoryIcon = 'fas fa-code-branch';
-            break;
-          case 'learning':
-            categoryLabel = 'Aprendizado';
-            categoryIcon = 'fas fa-graduation-cap';
-            break;
-          case 'personal':
-          default:
-            categoryLabel = 'Pessoal';
-            categoryIcon = 'fas fa-user';
+        // Determinar categorias do projeto
+        const projectCats = projectCategories[repo.name] || ['pessoal'];
+        let categoryLabels = '';
+
+        // Objeto com ícones para cada categoria
+        const categoryIcons = {
+          'institucional': 'fas fa-briefcase',
+          'cotidiano': 'fas fa-coffee',
+          'vivajoaopessoa': 'fas fa-map-marker-alt',
+          'learning': 'fas fa-graduation-cap',
+          'nerd': 'fas fa-gamepad',
+          'opensource': 'fas fa-code-branch',
+          'ia': 'fas fa-robot',
+          'pessoal': 'fas fa-user'
+        };
+
+        // Objeto com nomes amigáveis para cada categoria
+        const categoryNames = {
+          'institucional': 'Institucional',
+          'cotidiano': 'Cotidiano',
+          'vivajoaopessoa': 'Viva JP',
+          'learning': 'Aprendizado',
+          'nerd': 'Nerd/Fun',
+          'opensource': 'Open Source',
+          'ia': 'IA',
+          'pessoal': 'Pessoal'
+        };
+
+        // Criar badges para as categorias (limite a 3 para não sobrecarregar o visual)
+        const categoriesToShow = projectCats.slice(0, 3);
+        categoriesToShow.forEach((cat, index) => {
+          const icon = categoryIcons[cat] || 'fas fa-tag';
+          const name = categoryNames[cat] || cat;
+          categoryLabels += `
+            <span class="category-badge" style="
+              background: var(--primary); 
+              color: white; 
+              padding: 2px 8px; 
+              border-radius: 12px; 
+              font-size: 0.8rem;
+              margin-right: 5px;
+              margin-bottom: 5px;
+              display: inline-block;">
+              <i class="${icon}"></i> ${name}
+            </span>
+          `;
+        });
+
+        // Exibir indicador se houver mais categorias
+        if (projectCats.length > 3) {
+          categoryLabels += `
+            <span class="category-badge" style="
+              background: var(--bg-card); 
+              border: 1px solid var(--border);
+              color: var(--text-light); 
+              padding: 2px 8px; 
+              border-radius: 12px; 
+              font-size: 0.8rem;
+              display: inline-block;">
+              +${projectCats.length - 3}
+            </span>
+          `;
         }
         
         // Gera uma cor baseada no nome do repositório
@@ -930,8 +1019,8 @@
         
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card';
-        projectCard.dataset.category = category;
-        
+        projectCard.dataset.categories = projectCats.join(' ');
+
         // Usa as iniciais do projeto
         const nameInitials = repo.name
           .split('-')
@@ -946,7 +1035,7 @@
               ${nameInitials}
             </span>
             <span style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;">
-              <i class="${categoryIcon}"></i> ${categoryLabel}
+              <i class="${categoryIcons[projectCats[0]]}"></i> ${categoryNames[projectCats[0]]}
             </span>
           </div>
         `;
@@ -957,6 +1046,9 @@
             <a href="${repo.html_url}" class="project-title" target="_blank" rel="noopener">
               ${sanitizeHTML(repo.name)}
             </a>
+            <div class="project-categories-container" style="margin-bottom: 10px;">
+              ${categoryLabels}
+            </div>
             <p class="project-desc">${sanitizeHTML(repo.description || "Sem descrição disponível.")}</p>
             <div class="project-footer">
               <a href="${repo.html_url}" class="project-btn outline-btn" target="_blank" rel="noopener">
