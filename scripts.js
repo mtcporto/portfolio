@@ -3,6 +3,8 @@
    const defaultImage = "https://placehold.co/300x180/eee/999?text=Sem+Imagem";
    const maxProjects = 100; // Aumentando o limite para pegar mais projetos
    const projectsPerPage = 6; // Projetos por página
+   const showWebsiteLink = false; // Nova configuração para controlar a exibição do link do website
+   
    
    // Variáveis de estado para projetos
    let allProjects = [];
@@ -107,8 +109,10 @@
        
        const socialLinks = [];
        if (user.html_url) socialLinks.push(`<a href="${user.html_url}" class="social-btn" target="_blank" rel="noopener"><i class="fab fa-github"></i>GitHub</a>`);
-       if (user.blog) socialLinks.push(`<a href="${sanitizeHTML(user.blog)}" class="social-btn" target="_blank" rel="noopener"><i class="fas fa-globe"></i>Website</a>`);
-       
+
+       // Adicionar link do website apenas se showWebsiteLink for true
+       if (showWebsiteLink && user.blog) socialLinks.push(`<a href="${sanitizeHTML(user.blog)}" class="social-btn" target="_blank" rel="noopener"><i class="fas fa-globe"></i>Website</a>`);
+
        // Adicionar LinkedIn
        socialLinks.push(`<a href="https://www.linkedin.com/in/marco-tulio-porto-5671a323/" class="social-btn" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i>LinkedIn</a>`);
        
