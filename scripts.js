@@ -59,6 +59,8 @@
      'cert': ['institucional'],
      'alertas': ['institucional'],
      'whatnow': ['institucional'],
+     'virtus': ['institucional'],
+
 
      // Cotidiano (pode acumular com vivajoaopessoa)
      'bares': ['cotidiano', 'vivajoaopessoa'],
