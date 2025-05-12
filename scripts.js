@@ -60,6 +60,8 @@
      'alertas': ['institucional'],
      'whatnow': ['institucional'],
      'virtus': ['institucional'],
+     'consuper': ['institucional'],
+     'tecgeo': ['learning', 'institucional'],
 
 
      // Cotidiano (pode acumular com vivajoaopessoa)
@@ -83,10 +85,13 @@
      'dnd': ['learning', 'nerd'],
      'rickyandmorty': ['learning', 'nerd'],
      'wow': ['learning', 'nerd'],
+      
      'chat-gemini': ['learning', 'ia', 'opensource'],
      'detect': ['learning', 'ia', 'opensource'],
      'facerec': ['learning', 'ia', 'opensource'],
      'opencv': ['learning', 'ia', 'opensource'],
+     'eventos': ['learning', 'ia', 'opensource'], 
+     'openrouter': ['learning', 'ia', 'opensource'],
      'tts-wsapi': ['learning'],
      'videos': ['learning', 'opensource'],
      'filmes': ['learning'],
