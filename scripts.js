@@ -95,6 +95,7 @@
      'tts-wsapi': ['learning'],
      'videos': ['learning', 'opensource'],
      'filmes': ['learning'],
+     'interfaces': ['learning'],
      'calls': ['learning', 'opensource'],
      'chat': ['learning', 'opensource'],
 
